@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="raygun-django-middleware",
-    version="1.0.dev0",
+    version="1.0",
     description="Raygun Django Middleware",
     author="Mirus Research",
     author_email="frank@mirusresearch.com",
