@@ -18,8 +18,9 @@ class RaygunMiddleware(object):
         raygunRequest = self._mapRequest(request)
 
         # checking debug is what's different from raygun's provided middleware
-        if settings.DEBUG:
-            logger.debug("Not sending error to raygun because DEBUG. request to send = \n%s" % pprint.pformat(raygunRequest))
+        is_unittesting = settings.IS_UNIT_TESTING if hasattr(settings, 'IS_UNIT_TESTING') else False
+        if settings.DEBUG or is_unittesting:
+            logger.debug("Not sending error to raygun because DEBUG or IS_UNIT_TESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
         else:
             self.sender.send_exception(exception=exception, request=raygunRequest)
 
