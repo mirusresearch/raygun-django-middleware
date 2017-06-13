@@ -4,6 +4,7 @@ import pprint
 from raygun4py import raygunprovider
 
 from django.conf import settings
+from django.http import HttpResponse
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,7 @@ class RaygunMiddleware(object):
             logger.debug("Not sending error to raygun because DEBUG or IS_UNIT_TESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
         else:
             self.sender.send_exception(exception=exception, request=raygunRequest)
+            return HttpResponse('<h1>Server Error (500)</h1>', status=500)
 
     def _mapRequest(self, request):
         headers = request.META.items()
