@@ -24,6 +24,11 @@ class RaygunMiddleware(object):
         if not raygun_force and (settings.DEBUG or is_unittesting):
             logger.debug("Not sending error to raygun because DEBUG or IS_UNIT_TESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
         else:
+            logger.debug("Sending to raygun. %s" % pprint.pformat({
+                'RAYGUN_FORCE': raygun_force,
+                'IS_UNIT_TESTING': is_unittesting,
+                'DEBUG': settings.DEBUG,
+            }))
             self.sender.send_exception(exception=exception, request=raygunRequest)
             # return HttpResponse('<h1>Server Error (500)</h1>', status=500)
 
