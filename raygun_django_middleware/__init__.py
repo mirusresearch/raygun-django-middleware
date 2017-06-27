@@ -13,6 +13,10 @@ class RaygunMiddleware(object):
 
     def __init__(self):
         apiKey = getattr(settings, 'RAYGUN4PY_API_KEY', None)
+        if not apiKey:
+            apiKey = getattr(settings, 'RAYGUN4PY_CONFIG', {}).get('api_key')
+        if not apiKey:
+            raise Exception('Missing raygun API key')
         self.sender = raygunprovider.RaygunSender(apiKey)
 
     def process_exception(self, request, exception):
