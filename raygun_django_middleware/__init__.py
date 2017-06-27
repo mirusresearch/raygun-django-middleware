@@ -20,11 +20,12 @@ class RaygunMiddleware(object):
 
         # checking debug is what's different from raygun's provided middleware
         is_unittesting = settings.IS_UNIT_TESTING if hasattr(settings, 'IS_UNIT_TESTING') else False
-        if settings.DEBUG or is_unittesting:
+        raygun_force = getattr(settings, 'RAYGUN_FORCE', False)  # to test raygun erros
+        if not raygun_force and (settings.DEBUG or is_unittesting):
             logger.debug("Not sending error to raygun because DEBUG or IS_UNIT_TESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
         else:
             self.sender.send_exception(exception=exception, request=raygunRequest)
-            return HttpResponse('<h1>Server Error (500)</h1>', status=500)
+            # return HttpResponse('<h1>Server Error (500)</h1>', status=500)
 
     def _mapRequest(self, request):
         headers = request.META.items()
