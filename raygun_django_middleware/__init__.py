@@ -29,7 +29,7 @@ class RaygunMiddleware(object):
             is_unittesting = getattr(settings, 'IS_UNIT_TESTING', False)
         raygun_force = getattr(settings, 'RAYGUN_FORCE', False)  # to test raygun erros
         if not raygun_force and (settings.DEBUG or is_unittesting):
-            logger.debug("Not sending error to raygun because DEBUG or IS_UNIT_TESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
+            logger.debug("Not sending error to raygun because DEBUG or IS_UNITTESTING. request to send = \n%s" % pprint.pformat(raygunRequest))
         else:
             logger.debug("Sending to raygun. %s" % pprint.pformat({
                 'RAYGUN_FORCE': raygun_force,
