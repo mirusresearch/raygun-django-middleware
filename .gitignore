@@ -3,3 +3,4 @@ dist
 raygun_django_middleware.egg-info
 .DS_Store
 *.pyc
+build

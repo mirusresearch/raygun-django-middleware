@@ -60,6 +60,7 @@ class RaygunMiddleware(object):
             'queryString': dict((key, request.GET[key]) for key in request.GET),
             # F. Henard - 2/19/18 - bad practice to access request.POST in middleware - see https://stackoverflow.com/a/28641930
             # 'form': dict((key, request.POST[key]) for key in request.POST),
+            'form': {},
             'headers': _headers,
             'rawData': raw_data,
         }
