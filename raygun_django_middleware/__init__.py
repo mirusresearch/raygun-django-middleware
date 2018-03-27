@@ -47,9 +47,12 @@ class RaygunMiddleware(object):
                 _headers[k] = v
 
         raw_data = None
-        if hasattr(request, 'body'):
-            raw_data = request.body
-        elif hasattr(request, 'raw_post_data'):
+        # F. Henard 3/27/18 - should not access body in middleware for post requests - see https://docs.djangoproject.com/en/1.11/topics/http/middleware/
+        # if hasattr(request, 'body'):
+        #     raw_data = request.body
+        # elif hasattr(request, 'raw_post_data'):
+        #     raw_data = request.raw_post_data
+        if hasattr(request, 'raw_post_data'):
             raw_data = request.raw_post_data
 
         return {
